@@ -6,14 +6,29 @@
 url="https://www.youtube.com/feeds/videos.xml?channel_id="
 
 channel_choice() {
-    declare -a channels=("VOA" "Cnet" "Verge")
+    declare -a channels=("VOA" "Cnet" "Verge" "$entered_youtuber")
     (for val in "${channels[@]}"; do
         echo $val
         done;) | fzf
 }
 
+default_entered_url="https://www.youtube.com/watch?v=1f8Gp2gbXgk"
+[[ "$1" ]] && enered_url="$1" || entered_url="$(xclip -o)"
+[[ "$entered_url"  != *"youtube"* ]] && entered_url=$default_entered_url
+
+entered_cid=$(wget -qO- "$entered_url" | 
+    tr "," "\n" | grep channelIds --color| 
+    cut -d\" -f6 | head -n 1)
+
+entered_youtuber=$(wget -qO- "$entered_url" |
+    tr "," "\n" | grep ownerChannelName --color|
+    cut -d\" -f4)
+
 ch_choice=$(channel_choice)
 case $ch_choice in
+    "$entered_youtuber")
+        cid=$entered_cid
+        ;;
     "VOA")
         cid="UCMIJ_FI2mLfuXdG9H5YjPVA"
         ;;
