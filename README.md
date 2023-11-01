@@ -1,7 +1,7 @@
 # yt-mpv
 yt-mpv is a bash script to play, download video and audio from YouTube
 
-(requirements: yt-dlp, mpv)
+(requirements: [yt-dlp](https://github.com/yt-dlp/yt-dlp), [mpv](https://mpv.io/))
 
 ## Step 1
 
