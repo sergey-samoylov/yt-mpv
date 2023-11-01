@@ -5,7 +5,7 @@ yt-mpv is a bash script to play, download video and audio from YouTube
 
 ## Step 1
 
-By default yt-mpv starts with three "example channels". They are not blured on the screenshot bellow.
+By default yt-mpv starts with four "example channels". Three of thev are not blured on the screenshot bellow.
 
 You can find out channel ids of your favorite channels and add them to the script as you please.
 
@@ -14,6 +14,10 @@ Or you can paste url as the first argument:
 ```Bash
 yt-mpv https://...
 ```
+
+Or just copy (right click & copy) url of the video you would like to watch, listen or download (audio or video)
+
+In this case yt-mpv will auto-create an entry for it.
 
 ![start_menu](img/yt-mpv_1.png)
 
