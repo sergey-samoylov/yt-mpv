@@ -32,3 +32,7 @@ Now you can choose what to do with the content.
 ![start_menu](img/yt-mpv_3.png)
 
 BTW you can exit anytime from yt-mpv by pressing CTRL+C
+
+and start it again to choose another content.
+
+If you like the script, consider giving it a star, please.
