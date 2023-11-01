@@ -9,6 +9,12 @@ By default yt-mpv starts with three "example channels". They are not blured on t
 
 You can find out channel ids of your favorite channels and add them to the script as you please.
 
+Or you can paste url as the first argument:
+
+```Bash
+yt-mpv https://...
+```
+
 ![start_menu](img/yt-mpv_1.png)
 
 ## Step 2
