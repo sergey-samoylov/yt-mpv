@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+# author: Sergey Samoylov
+# thanks to: Kris Occhipinti - Bash guru, who taught me a lot
+# name of the app: yt-mpv
+
+url="https://www.youtube.com/feeds/videos.xml?channel_id="
+
+channel_choice() {
+    declare -a channels=("VOA" "Cnet" "Verge")
+    (for val in "${channels[@]}"; do
+        echo $val
+        done;) | fzf
+}
+
+ch_choice=$(channel_choice)
+case $ch_choice in
+    "VOA")
+        cid="UCMIJ_FI2mLfuXdG9H5YjPVA"
+        ;;
+    "Cnet")
+        cid="UCOmcA3f_RrH6b9NmcNa4tdg"
+        ;;
+    "Verge")
+        cid="UCddiUEpeqJcYeBxX1IVBKvQ"
+        ;;
+esac
+
+mkdir -p ~/tmp # make dir "tmp" in /home/user if not exists
+
+page_json=$(w3m $url$cid | jc -p --xml)
+
+title_choice=$(echo $page_json | 
+    jq -r '.[].entry.[]| (.title) + " >" + (.link."@href"),(">>")') 
+
+echo $title_choice | sed 's/>>/\n/g' > ~/tmp/lst_title_url.txt
+
+url_choice=$(cat ~/tmp/lst_title_url.txt | 
+    grep "$(cat ~/tmp/lst_title_url.txt | cut -d '>' -f 1 | fzf)" | 
+    cut -d '>' -f 2)
+
+dl_or_play() {
+    declare -a dl_options=("download audio" "download video" 
+        "play audio" "play video" "exit")
+    (for val in "${dl_options[@]}"; do
+        echo $val
+        done;) | fzf
+}
+
+action_choice=$(dl_or_play)
+case $action_choice in
+    "download audio")
+        cd ~/Music
+        yt-dlp -x -o "%(title)s.%(ext)s" $url_choice
+        echo "=== Downloaded to Music: ==="
+        ls; cd
+        ;;
+    "download video")
+        cd ~/Videos
+        yt-dlp -S res:720 -o "%(title)s.%(ext)s" $url_choice
+        echo "=== Downloaded to Videos: ==="
+        ls; cd
+        ;;
+    "play audio")
+        mpv --no-video $url_choice
+        ;;
+    "play video")
+        mpv $url_choice
+        ;;
+    *)
+        exit
+        ;;
+esac
