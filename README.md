@@ -37,4 +37,4 @@ BTW you can exit anytime from yt-mpv by pressing CTRL+C
 
 and start it again to choose another content.
 
-If you like the script, consider giving it a star, please.
+If you like the script and find it useful, consider giving it a star, please.
