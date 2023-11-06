@@ -14,7 +14,8 @@ channel_choice() {
 
 default_entered_url="https://www.youtube.com/watch?v=1f8Gp2gbXgk"
 [[ "$1" ]] && enered_url="$1" || entered_url="$(xclip -o)"
-[[ "$entered_url"  != *"youtube"* ]] && entered_url=$default_entered_url
+# resolve as it is not working as expected
+# [[ "$entered_url"  != *"youtube"* ]] && entered_url=$default_entered_url
 
 entered_cid=$(wget -qO- "$entered_url" | 
     tr "," "\n" | grep channelIds --color| 
